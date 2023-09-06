@@ -58,6 +58,69 @@ min(c3al)
 
 The wine with the lowest alcohol content belongs to class2.
 
+c(3)
+
+```{r}
+mag<-c(newwine$magnesium)
+count<-0
+
+for (i in 1:178){
+  if (mag[i]>114){
+  count=count+1
+  }
+}
+count
+
+```
+
+There are 26 kinds of wine have higher levels of magnesium.
+
+c(4)
+
+```{r}
+c1mag<-newwine$magnesium[newwine$class==1]
+c2mag<-newwine$magnesium[newwine$class==2]
+c3mag<-newwine$magnesium[newwine$class==3]
+
+count1<-0
+for (i in 1:length(c1mag)){
+  if (c1mag[i]>114){
+  count1=count1+1
+  }
+}
+count1
+
+count2<-0
+for (i in 1:length(c2mag)){
+  if (c2mag[i]>114){
+  count2=count2+1
+  }
+}
+count2
+
+count3<-0
+for (i in 1:length(c3mag)){
+  if (c3mag[i]>114){
+  count3=count3+1
+  }
+}
+count3
+
+
+```
+
+For class 1 wines, there are 15 of them have higher levels of magnesium.
+
+For class 2 wines, there are 6 of them have higher levels of magnesium.
+
+For class 3 wines, there are 5 of them have higher levels of magnesium.
+
+\(d\)
+
+```{r}
+
+```
+
 ## Problem2
 
 ```{r}
