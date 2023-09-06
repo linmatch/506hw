@@ -1,26 +1,68 @@
 ---
 title: "506hw1"
 author: "Manqing Lin"
-format: html
+format: 
+  html:
+    code-fold: true
 editor: visual
 ---
 
-## Quarto
+## Problem1
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+##a&b
 
-## Running Code
+```{r}
+library(readr)
+wine <- read_csv("~/Downloads/wine/wine.data")
+View(wine)
+show_col_types = FALSE
+```
+
+```{r}
+library(readr)
+winee <- read_csv("~/Downloads/wine/winee.names")
+View(winee)
+```
+
+##c
+
+c(1)
+
+```{r}
+newwine<-rbind(c(1,14.23,1.71,2.43,15.6,127,2.8,3.06,0.28,2.29,5.64,1.04,3.92,1065),wine)
+
+View(newwine)
+
+colnames(newwine)<-c("class","alcohol","malic acid","ash","alcalinity of ash", "magnesium","total phenols", "flavanoids", "nonflavanoid phenols","proanthocyanins","color intensity","hue","od280/od350","proline")
+```
+
+```{r}
+c1al<-newwine$alcohol[newwine$class==1]
+c2al<-newwine$alcohol[newwine$class==2]
+c3al<-newwine$alcohol[newwine$class==3]
+
+max(c1al)
+max(c2al)
+max(c3al)
+```
+
+The wine with the highest alcohol content belongs to class1.
+
+c(2)
+
+```{r}
+min(c1al)
+min(c2al)
+min(c3al)
+```
+
+The wine with the lowest alcohol content belongs to class2.
+
+## Problem2
 
 ```{r}
 1 + 1
-2+2
-```
 
-You can add options to executable code like this
-
-```{r}
-#| echo: false
-2 * 2
 ```
 
 The `echo: false` option disables the printing of code (only output is displayed).
