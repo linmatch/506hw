@@ -128,86 +128,21 @@ For class 3 wines, there are 5 of them have higher levels of magnesium.
 
 ```{r}
 ##calculate average value of each variable
-meanvar<-c()
+df<-subset(newwine,select="class")
+varlist<-colMeans(df)
 
-meanvar[1]<-mean(newwine$alcohol)
-meanvar[2]<-mean(newwine$`malic acid`)
-mean(newwine$ash)
-mean(newwine$`alcalinity of ash`)
-mean(newwine$magnesium)
-mean(newwine$`total phenols`)
-mean(newwine$flavanoids)
-mean(newwine$`nonflavanoid phenols`)
-mean(newwine$proanthocyanins)
-mean(newwine$`color intensity`)
-mean(newwine$hue)
-mean(newwine$`od280/od350`)
-mean(newwine$proline)
-       
-
+##create a table for average value of each variable
+data=matrix(varlist,ncol=13,nrow = 1)
+colnames(data)<-c("alcohol","MalicAcid","ash","AlofAsh", "mag","TTphenols", "flava", "NonflaPhe","proanth","ColorInten","hue","OD","proline")
+rownames(data)<-c("mean")
+final=as.table(data)
+final
 ```
 
 ```{r}
-##calculate average value of each variable for class 1 wines
-mean(newwine$alcohol[newwine$class==1])
-mean(newwine$`malic acid`[newwine$class==1])
-mean(newwine$ash[newwine$class==1])
-mean(newwine$`alcalinity of ash`[newwine$class==1])
-mean(newwine$magnesium[newwine$class==1])
-mean(newwine$`total phenols`[newwine$class==1])
-mean(newwine$flavanoids[newwine$class==1])
-mean(newwine$`nonflavanoid phenols`[newwine$class==1])
-mean(newwine$proanthocyanins[newwine$class==1])
-mean(newwine$`color intensity`[newwine$class==1])
-mean(newwine$hue[newwine$class==1])
-mean(newwine$`od280/od350`[newwine$class==1])
-mean(newwine$proline[newwine$class==1])
-
-```
-
-```{r}
-##calculate average value of each variable for class 2 wines
-mean(newwine$alcohol[newwine$class==2])
-mean(newwine$`malic acid`[newwine$class==2])
-mean(newwine$ash[newwine$class==2])
-mean(newwine$`alcalinity of ash`[newwine$class==2])
-mean(newwine$magnesium[newwine$class==2])
-mean(newwine$`total phenols`[newwine$class==2])
-mean(newwine$flavanoids[newwine$class==2])
-mean(newwine$`nonflavanoid phenols`[newwine$class==2])
-mean(newwine$proanthocyanins[newwine$class==2])
-mean(newwine$`color intensity`[newwine$class==2])
-mean(newwine$hue[newwine$class==2])
-mean(newwine$`od280/od350`[newwine$class==2])
-mean(newwine$proline[newwine$class==2])
-
-```
-
-```{r}
-##calculate average value of each variable for class 3 wines
-mean(newwine$alcohol[newwine$class==3])
-mean(newwine$`malic acid`[newwine$class==3])
-mean(newwine$ash[newwine$class==3])
-mean(newwine$`alcalinity of ash`[newwine$class==3])
-mean(newwine$magnesium[newwine$class==3])
-mean(newwine$`total phenols`[newwine$class==3])
-mean(newwine$flavanoids[newwine$class==3])
-mean(newwine$`nonflavanoid phenols`[newwine$class==3])
-mean(newwine$proanthocyanins[newwine$class==3])
-mean(newwine$`color intensity`[newwine$class==3])
-mean(newwine$hue[newwine$class==3])
-mean(newwine$`od280/od350`[newwine$class==3])
-mean(newwine$proline[newwine$class==3])
-```
-
-| average  | alcohol | malic acid | ash | alcalinity of ash | magnesium | total phenols | flava | nonflava | proan | col inten | hue | OD  | proline |
-|----------|---------|-------|------|----------|------------|----------|-------|----------|-------|----------|------|------|---------|
-| varibale |         |            |     |                   |           |               |       |          |       |           |     |     |         |
-| class    |         |            |     |                   |           |               |       |          |       |           |     |     |         |
-
-: average value
-
-```{r}
+##calculate average value of each variable for each class wines
+library(dplyr)
+newwine%>%group_by(class)%>%summarise_at(vars("alcohol","malic acid","ash","alcalinity of ash", "magnesium","total phenols", "flavanoids", "nonflavanoid phenols","proanthocyanins","color intensity","hue","od280/od350","proline"),mean)
 
 ```
 
@@ -256,4 +191,83 @@ findRootPower<-function(){
 }
 
 findRootPower(125)
+```
+
+## Problem3
+
+##a
+
+```{r}
+# Function to determine the name of a poker hand
+get_poker_hand_name <- function(suits, ranks) {
+  # Check for a flush (all suits the same)
+  if (length(unique(suits)) == 1) {
+    # Check for a straight flush
+    if (max(ranks) - min(ranks) == 4) {
+      return("Straight Flush")
+    } else {
+      return("Flush")
+    }
+  }
+  
+  # Check for four of a kind
+  if (any(table(ranks) == 4)) {
+    return("Four of a Kind")
+  }
+  
+  # Check for a full house
+  if (any(table(ranks) == 3) && any(table(ranks) == 2)) {
+    return("Full House")
+  }
+  
+  # Check for a straight
+  if (max(ranks) - min(ranks) == 4) {
+    return("Straight")
+  }
+  
+  # Check for three of a kind
+  if (any(table(ranks) == 3)) {
+    return("Three of a Kind")
+  }
+  
+  # Check for two pair
+  if (sum(table(ranks) == 2) == 4) {
+    return("Two Pair")
+  }
+  
+  # Check for one pair
+  if (any(table(ranks) == 2)) {
+    return("One Pair")
+  }
+  
+  # If none of the above, it's a high card hand
+  return("High Card")
+}
+
+# Function to simulate dealing a round of 5-card stud poker
+deal_poker_round <- function(num_players) {
+  # Define the deck of cards
+  suits <- c("Hearts", "Diamonds", "Clubs", "Spades")
+  ranks <- c(2:10, "Jack", "Queen", "King", "Ace")
+  
+  # Create a deck of cards
+  deck <- expand.grid(Rank = ranks, Suit = suits)
+  
+  # Shuffle the deck
+  deck <- deck[sample(nrow(deck)), ]
+  
+  # Deal cards to each player
+  hands <- vector("list", num_players)
+  for (i in 1:num_players) {
+    hands[[i]] <- deck[((i - 1) * 5 + 1):(i * 5), ]
+    cat("Player", i, "Hand:\n")
+    print(hands[[i]])
+    cat("Hand Name:", get_poker_hand_name(hands[[i]]$Suit, hands[[i]]$Rank), "\n\n")
+  }
+}
+
+# Example usage:
+# To simulate a round of poker with 3 players:
+# deal_poker_round(3)
+
 ```
