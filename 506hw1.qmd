@@ -37,10 +37,12 @@ colnames(newwine)<-c("class","alcohol","malic acid","ash","alcalinity of ash", "
 ```
 
 ```{r}
+##get the alcohol content data for each class of wine
 c1al<-newwine$alcohol[newwine$class==1]
 c2al<-newwine$alcohol[newwine$class==2]
 c3al<-newwine$alcohol[newwine$class==3]
 
+##calculate the maximum of alchol content for each class of wine
 max(c1al)
 max(c2al)
 max(c3al)
@@ -51,6 +53,7 @@ The wine with the highest alcohol content belongs to class1.
 c(2)
 
 ```{r}
+##calculate the minimum of alchol content for each class of wine
 min(c1al)
 min(c2al)
 min(c3al)
@@ -61,9 +64,11 @@ The wine with the lowest alcohol content belongs to class2.
 c(3)
 
 ```{r}
+##get all magnesium data
 mag<-c(newwine$magnesium)
 count<-0
 
+##count the number of wine that have magnesium greater than 114
 for (i in 1:178){
   if (mag[i]>114){
   count=count+1
@@ -78,10 +83,12 @@ There are 26 kinds of wine have higher levels of magnesium.
 c(4)
 
 ```{r}
+##get magnesium data for each class of wine
 c1mag<-newwine$magnesium[newwine$class==1]
 c2mag<-newwine$magnesium[newwine$class==2]
 c3mag<-newwine$magnesium[newwine$class==3]
 
+##count the number of class 1 wine that have magnesium greater than 114
 count1<-0
 for (i in 1:length(c1mag)){
   if (c1mag[i]>114){
@@ -90,6 +97,7 @@ for (i in 1:length(c1mag)){
 }
 count1
 
+##count the number of class 2 wine that have magnesium greater than 114
 count2<-0
 for (i in 1:length(c2mag)){
   if (c2mag[i]>114){
@@ -98,6 +106,7 @@ for (i in 1:length(c2mag)){
 }
 count2
 
+##count the number of class 3 wine that have magnesium greater than 114
 count3<-0
 for (i in 1:length(c3mag)){
   if (c3mag[i]>114){
@@ -115,17 +124,136 @@ For class 2 wines, there are 6 of them have higher levels of magnesium.
 
 For class 3 wines, there are 5 of them have higher levels of magnesium.
 
-\(d\)
+##d
+
+```{r}
+##calculate average value of each variable
+meanvar<-c()
+
+meanvar[1]<-mean(newwine$alcohol)
+meanvar[2]<-mean(newwine$`malic acid`)
+mean(newwine$ash)
+mean(newwine$`alcalinity of ash`)
+mean(newwine$magnesium)
+mean(newwine$`total phenols`)
+mean(newwine$flavanoids)
+mean(newwine$`nonflavanoid phenols`)
+mean(newwine$proanthocyanins)
+mean(newwine$`color intensity`)
+mean(newwine$hue)
+mean(newwine$`od280/od350`)
+mean(newwine$proline)
+       
+
+```
+
+```{r}
+##calculate average value of each variable for class 1 wines
+mean(newwine$alcohol[newwine$class==1])
+mean(newwine$`malic acid`[newwine$class==1])
+mean(newwine$ash[newwine$class==1])
+mean(newwine$`alcalinity of ash`[newwine$class==1])
+mean(newwine$magnesium[newwine$class==1])
+mean(newwine$`total phenols`[newwine$class==1])
+mean(newwine$flavanoids[newwine$class==1])
+mean(newwine$`nonflavanoid phenols`[newwine$class==1])
+mean(newwine$proanthocyanins[newwine$class==1])
+mean(newwine$`color intensity`[newwine$class==1])
+mean(newwine$hue[newwine$class==1])
+mean(newwine$`od280/od350`[newwine$class==1])
+mean(newwine$proline[newwine$class==1])
+
+```
+
+```{r}
+##calculate average value of each variable for class 2 wines
+mean(newwine$alcohol[newwine$class==2])
+mean(newwine$`malic acid`[newwine$class==2])
+mean(newwine$ash[newwine$class==2])
+mean(newwine$`alcalinity of ash`[newwine$class==2])
+mean(newwine$magnesium[newwine$class==2])
+mean(newwine$`total phenols`[newwine$class==2])
+mean(newwine$flavanoids[newwine$class==2])
+mean(newwine$`nonflavanoid phenols`[newwine$class==2])
+mean(newwine$proanthocyanins[newwine$class==2])
+mean(newwine$`color intensity`[newwine$class==2])
+mean(newwine$hue[newwine$class==2])
+mean(newwine$`od280/od350`[newwine$class==2])
+mean(newwine$proline[newwine$class==2])
+
+```
+
+```{r}
+##calculate average value of each variable for class 3 wines
+mean(newwine$alcohol[newwine$class==3])
+mean(newwine$`malic acid`[newwine$class==3])
+mean(newwine$ash[newwine$class==3])
+mean(newwine$`alcalinity of ash`[newwine$class==3])
+mean(newwine$magnesium[newwine$class==3])
+mean(newwine$`total phenols`[newwine$class==3])
+mean(newwine$flavanoids[newwine$class==3])
+mean(newwine$`nonflavanoid phenols`[newwine$class==3])
+mean(newwine$proanthocyanins[newwine$class==3])
+mean(newwine$`color intensity`[newwine$class==3])
+mean(newwine$hue[newwine$class==3])
+mean(newwine$`od280/od350`[newwine$class==3])
+mean(newwine$proline[newwine$class==3])
+```
+
+| average  | alcohol | malic acid | ash | alcalinity of ash | magnesium | total phenols | flava | nonflava | proan | col inten | hue | OD  | proline |
+|----------|---------|-------|------|----------|------------|----------|-------|----------|-------|----------|------|------|---------|
+| varibale |         |            |     |                   |           |               |       |          |       |           |     |     |         |
+| class    |         |            |     |                   |           |               |       |          |       |           |     |     |         |
+
+: average value
 
 ```{r}
 
 ```
+
+##e
+
+```{r}
+##perform t test for level of ash between class1 and class2
+t.test(newwine$ash[newwine$class==1],newwine$ash[newwine$class==2])
+```
+
+Since the p value is smaller than 0.05, we reject the null hypothesis and conclude that there is a different in the level of ash between class 1 wine and class 2 wine at $\alpha=0.05$.
+
+```{r}
+##perform t test for level of ash between class1 and class3
+t.test(newwine$ash[newwine$class==1],newwine$ash[newwine$class==3])
+```
+
+Since the p value is greater than 0.05, we fail to reject the null hypothesis and conclude that there is not different in the level of ash between class 1 wine and class 3 wine at $\alpha=0.05$.
+
+```{r}
+##perform t test for level of ash between class2 and class3
+t.test(newwine$ash[newwine$class==2],newwine$ash[newwine$class==3])
+```
+
+Since the p value is smaller than 0.05, we reject the null hypothesis and conclude that there is a different in the level of ash between class 2 wine and class 3 wine at $\alpha=0.05$.
 
 ## Problem2
 
-```{r}
-1 + 1
+##a
 
+```{r}
+isPerfectPower<-function(n,p){
+  r<-n^(1/p)
+  if(r%%1==0){
+    mylist<-list("isPerfect"=TRUE,"root"=p)
+    return(mylist)
+  }
+}
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+##b
+
+```{r}
+findRootPower<-function(){
+  
+}
+
+findRootPower(125)
+```
