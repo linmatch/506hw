@@ -177,8 +177,11 @@ Since the p value is smaller than 0.05, we reject the null hypothesis and conclu
 isPerfectPower<-function(n,p){
   r<-n^(1/p)
   if(r%%1==0){
-    mylist<-list("isPerfect"=TRUE,"root"=p)
+    mylist<-list("isPerfect"=TRUE)
     return(mylist)
+  }
+  else{
+    return(list("isPerfect"=FALSE))
   }
 }
 ```
@@ -186,56 +189,66 @@ isPerfectPower<-function(n,p){
 ##b
 
 ```{r}
-findRootPower<-function(){
-  
+findRootPower<-function(n){
+  for(r in 2:sqrt(n)){
+    p=log(n, base=r)
+    if(isPerfectPower(n,p)==TRUE){
+      return(n=r^p)
+    }
+    return("Not a Perfect Power")
+  }
+
 }
 
-findRootPower(125)
+findRootPower(27)
+n
+p
+r
 ```
 
 ## Problem3
 
-##a
+##a&b&c
 
 ```{r}
 # Function to determine the name of a poker hand
 get_poker_hand_name <- function(suits, ranks) {
   # Check for a flush (all suits the same)
   if (length(unique(suits)) == 1) {
-    # Check for a straight flush
-    if (max(ranks) - min(ranks) == 4) {
+    # Check for a straight flush(five cards are in sequence)
+    if (max(as.numeric(ranks)) - min(as.numeric(ranks)) == 4) {
       return("Straight Flush")
     } else {
       return("Flush")
     }
   }
   
-  # Check for four of a kind
+  # Check for four of a kind(if there exist four cards in the same rank)
   if (any(table(ranks) == 4)) {
     return("Four of a Kind")
   }
   
-  # Check for a full house
+  # Check for a full house(if there exist three cards in the same rank with two cards in a pair)
   if (any(table(ranks) == 3) && any(table(ranks) == 2)) {
     return("Full House")
   }
   
-  # Check for a straight
-  if (max(ranks) - min(ranks) == 4) {
+  # Check for a straight(if the five cards in a sequence but not having same suit)
+  if (max(as.numeric(ranks)) - min(as.numeric(ranks)) == 4) {
     return("Straight")
   }
   
-  # Check for three of a kind
+  # Check for three of a kind(if threre exist three cards are in the same rank)
   if (any(table(ranks) == 3)) {
     return("Three of a Kind")
   }
   
-  # Check for two pair
+  # Check for two pair(if there exist two pair of cards in the same rank)
   if (sum(table(ranks) == 2) == 4) {
     return("Two Pair")
   }
   
-  # Check for one pair
+  # Check for one pair(if there exist two cards in the same rank)
   if (any(table(ranks) == 2)) {
     return("One Pair")
   }
@@ -247,8 +260,10 @@ get_poker_hand_name <- function(suits, ranks) {
 # Function to simulate dealing a round of 5-card stud poker
 deal_poker_round <- function(num_players) {
   # Define the deck of cards
+  # import suits vector
   suits <- c("Hearts", "Diamonds", "Clubs", "Spades")
-  ranks <- c(2:10, "Jack", "Queen", "King", "Ace")
+  # import ranks vector
+  ranks <- c("2","3","4","5","6","7","8","9","10", "Jack", "Queen", "King", "Ace")
   
   # Create a deck of cards
   deck <- expand.grid(Rank = ranks, Suit = suits)
@@ -258,16 +273,28 @@ deal_poker_round <- function(num_players) {
   
   # Deal cards to each player
   hands <- vector("list", num_players)
+  # run the loop if i is between 1 and the number input
   for (i in 1:num_players) {
+    # define ith hand of card
     hands[[i]] <- deck[((i - 1) * 5 + 1):(i * 5), ]
+    # combine results to show player infomation
     cat("Player", i, "Hand:\n")
     print(hands[[i]])
+    # combine output to show the result hand infomation
     cat("Hand Name:", get_poker_hand_name(hands[[i]]$Suit, hands[[i]]$Rank), "\n\n")
   }
 }
 
 # Example usage:
 # To simulate a round of poker with 3 players:
-# deal_poker_round(3)
-
+#deal_poker_round(3)
+#deal_poker_round(4)
+#deal_poker_round(10)
+#deal_poker_round(11)
 ```
+
+The first error is the vector type of the ranks which report "all arguments must have the same length". It initially includes different type of vector, so I now change the vectors into same type.
+
+The second error is reporting "error in summary.factor, 'max' not meaning for for factors". This is because the type the vector should be numeric in the max function, so I add "as.numeric" before the rank vector.
+
+By simulating the process with different input, I think the code produce the accurate results when the number of players is no more than 10. When asking for more than 10 players to be dealt, there will be an error starting at the 11th hand.
