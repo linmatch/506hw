@@ -174,36 +174,45 @@ Since the p value is smaller than 0.05, we reject the null hypothesis and conclu
 ##a
 
 ```{r}
+
 isPerfectPower<-function(n,p){
   r<-n^(1/p)
   if(r%%1==0){
-    mylist<-list("isPerfect"=TRUE)
+    mylist<-list("isPerfect"=TRUE,"root"=r)
     return(mylist)
   }
   else{
-    return(list("isPerfect"=FALSE))
+    return(list("isPerfect"=FALSE,"value"=r))
   }
 }
+
+# test usage:
+isPerfectPower(125, p=3)
 ```
 
-##b
-
 ```{r}
-findRootPower<-function(n){
-  for(r in 2:sqrt(n)){
-    p=log(n, base=r)
-    if(isPerfectPower(n,p)==TRUE){
-      return(n=r^p)
-    }
-    return("Not a Perfect Power")
+isPerfectPower<-function(n,p){
+  r<<-n^(1/p)
+  if(r%%1==0){
+    return(TRUE)
   }
-
+  else{
+    return(FALSE)
+  }
 }
 
-findRootPower(27)
-n
-p
-r
+findRootPower<-function(n){
+  for(p in 2:10){
+    if(isPerfectPower(n,p)){
+      return(p)
+    }
+      p=p+1
+  }
+  return("Not a Perfect Power")
+}
+
+# test usage:
+findRootPower(125)
 ```
 
 ## Problem3
@@ -295,6 +304,6 @@ deal_poker_round <- function(num_players) {
 
 The first error is the vector type of the ranks which report "all arguments must have the same length". It initially includes different type of vector, so I now change the vectors into same type.
 
-The second error is reporting "error in summary.factor, 'max' not meaning for for factors". This is because the type the vector should be numeric in the max function, so I add "as.numeric" before the rank vector.
+The second error is reporting "error in summary.factor, 'max' not meaning for for factors". This is because the type the vector should be numeric in the max function, so I add "as.numeric" before the ranks.
 
 By simulating the process with different input, I think the code produce the accurate results when the number of players is no more than 10. When asking for more than 10 players to be dealt, there will be an error starting at the 11th hand.
